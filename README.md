@@ -26,12 +26,13 @@ from our images, and package it all into a pc class member:
   - Split the full contour at the spots which are closest to each corner.
   - Identify the type of each side (straight, male, female, other).
   - Normalize the edges, and generate a comparator class for the loss function.
-
+### Corner Detection
   The point of failure for the large, puzzle, and the only step that needed my intervention was the corner detection. The
 algorithm I used to select points is convoluted, and includes many different parameters (magic numbers) whose correct values,
 if they exist, are highly sensitive to the morphology of the pieces you are working with, and how you photograph them. You can
 look through the piece.findCorners() function to see the procedure. Most of the values were hand tuned, and the current values
 are about as good as I could do. Automatic tuning, or several iterative attempts to find corners could be implemented.
+### Side Type Identification
   After finding the corners we identify the side types. This is done becuase while it is obvious (based on shape alone) that two
 male pieces are not going to form a good match, if we identify explicit types on piece initialization, we avoid evaluating the 
 fairly expensive loss function. We use some trigonometry to find, for each point in the side contour, how far it is from the
@@ -39,6 +40,7 @@ straight line from the first point to the end point. Straight sides have basical
 sides have one strong peak, and therefore a high variance. Depending on if they extend towards or away from the center of the
 puzzle piece, we classify them as male or female. If a side has multiple peaks, one towards and one away from the center, we classify
 it as a weird type. Males only pair with females, but weird types pair with anything, as a catchall. 
+### Normalization
   Once we have all 4 sides and their types, we normalize them, shifting the first point to [0,0] and rotating them to horizontal. We
 take the normalized edges and make for each a KD Tree class from scikit's K Nearest Neighbors algorithm, which is the basis of the
 loss function. Here we also pre calculate the distance from the first point in the edge to the last, as another step to weed out
@@ -54,6 +56,7 @@ the two sides. If all of these checks pass, we go on to calculate an average nea
 two sides, (valid or not) that value is stored in an array so that later requests of the loss between that pair is basically free. Invalid
 pairings get a default score of a million. Typical values are between 1-10, where less than 3 is pretty good. The average loss over all pairs
 in the correct configuration of both tested puzzles is about 2.50.
+
 ## Solving
   The solving process for both puzzles consists of an A* search of possible states. At each step, we find the "neighbors" to the current state.
 That is, we select one of the positions on the board which borders some other piece. We prefer to choose those that border more than 1 piece,
@@ -65,7 +68,14 @@ as they have been in the past. In my testing, I have observed that this is usual
 in the past: once you make one incorrect placement, you are forced to make worse and worse ones over time. Using this, one could imagine a cost
 function that evaluates how the average loss has been changing over time, and formulate a line of best fit or some other function to factor in if
 the state has been steadily declining in quality. But the assumption of linearity works just fine.
-  
+
+# Results
+  All in all, this code mostly acheives what I expected of it at the start. If we are grading this in terms of usability, I would say the results are
+poor. The biggest bottleneck by far, is that you need to take a picture of every piece individually. This step took me around 3 hours for my 18x18 puzzle.
+not the funnest time of my life. The obvious solution would be to capture many pieces in a single image. This could potentially require quite a change
+of the image processing stage. Taking more images at a time means some pieces in the image could be at very different positions relative to the camera,
+adding already to the perspective distortions which I think are present. There is already some code in place for correcting these distortions, but I was
+unable to see much difference in the results. (I think this is becuase the issue I was trying to solve was somewhere else, I later figured out, so maybe I should try again? But it works anyways so its not on the immediate agenda). After loading in all my images, thought, the process was pretty seemless. A familiarized person could put in images and get solving in under an hour, including manual data correction. The main problem with this is that there are just so many hand tuned parameters for a dataset. At least 8 in the corner detection alone, and it's still not enough. 5 or so more in the side type identification, and maybe you couldn't even use this pipeline if you have highly irregular pieces, those without 4 corners, for example. So you can;t just throw anything in here and expect it to work. You could probably get it to that point though if you really wanted to. But computer vision was not the focus of this project, whihc is why mine is mediocre. The solving is what drew me in, and it 
 
 
 

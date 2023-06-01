@@ -5,7 +5,7 @@ matrix and distortion, which is not currently corrected as of the most recent ve
 find the image processing/info extraction code in piece.py. Most of the solving code is in puzl.py. bState is a class 
 which describes a particular board state, which are created and evaluated as part of the search algorithm. This code was 
 sucessfully tested on two puzzles, a 10x6 and an 18x18. The automatic feature detection worked for the 60 piece puzzle,
-but even after a good maount of tuning and tweaking, I could not successfully detect features for all 324 pieces in 
+but even after a good amount of tuning and tweaking, I could not successfully detect features for all 324 pieces in 
 the 18x18. In the end, there was about 10 pieces which I had to go in and manually correct. Once all data has been
 properly extracted, a correct configuration using all pieces was found succesfully, starting with only a single  correct
 placement from the user. The search algorithm is a basic A*, with options to do simple weighting of the heuristic and

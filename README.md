@@ -1,5 +1,5 @@
 # Puzzle Solver
-  This code is a project whose aim is to automatically extract features from pictures of puzzle pieces from, and then
+  This code is a project whose aim is to automatically extract features from pictures of puzzle pieces, and then
 use that information to solve the puzzle. Calibrator and cameraparam is code for getting information about the camera 
 matrix and distortion, which is not currently corrected as of the most recent version, but the code is there. You will
 find the image processing/info extraction code in piece.py. Most of the solving code is in puzl.py. bState is a class 

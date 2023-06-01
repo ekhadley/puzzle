@@ -33,6 +33,7 @@ class pc:
                 self.centroid = centroid/4
             self.sideTypes = np.load(f"{loadPath}\\sideTypes.npy")
             self.sides = [np.load(f"{loadPath}\\side{i}.npy") for i in range(4)]
+            #self.sides = [np.load(f"{loadPath}\\side{i}.npy")[::5] for i in range(4)] # take only every 5th contour pt to make loss fucntion faster
             self.dists, tid = [], 1
             for i, t in enumerate(self.sideTypes):
                 if t==0: tid *= i+2
@@ -104,12 +105,7 @@ class pc:
         edge = contours[0]
         return edge
 
-    #def findCorners(self, p):
-    #    corners = np.load(f"{p}\\corners.npy")
-    #    centroid = np.sum(corners, axis=0)/4
-    #    return corners, centroid
-
-    def findCorners_(self, rect, blurKernel=(9,9), subPixKernel=(50,50)):
+    def manualCornerSelect(self, rect, blurKernel=(9,9), subPixKernel=(50,50)): #used to repair the piecs whose corner detection did not work.
         croppedComponent = cv2.GaussianBlur(self.im, blurKernel, 0)
         criteria = (cv2.TERM_CRITERIA_MAX_ITER + cv2.TERM_CRITERIA_EPS, 50, 0.001)
         pts = choosePts(croppedComponent, 4, scale=.5).astype(np.float32)

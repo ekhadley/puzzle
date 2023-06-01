@@ -16,7 +16,7 @@ piece.checkPcs(pcs, (pw, ph))
 inps = [(0,(0,0),0), (17,(17,0),0), (306,(0,17),0), (323,(17,17),0)]
 initial = bState.boardState((pw, ph), len(pcs))
 solver = puzl.aStarSolver(initial, pcs, initialPlacement=inps[0])
-best = solver.solve(printEvery=3, heuristicScale=.6, maxRank=10, maxScore=30)
+best = solver.solve(printEvery=3, heuristicScale=.8, maxRank=3, maxScore=25)
 
 
 while 1: cv2.waitKey(1)

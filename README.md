@@ -44,7 +44,7 @@ take the normalized edges and make for each a KD Tree class from scikit's K Near
 loss function. Here we also pre calculate the distance from the first point in the edge to the last, as another step to weed out
 incompatible matches instead of doing a KNN calculation.
 ## Loss Function
-    Our loss function is quite simple. It takes in two edge shapes, belonging to 2 different pieces, and gives us a simple average of
+   Our loss function is quite simple. It takes in two edge shapes, belonging to 2 different pieces, and gives us a simple average of
 distances from K Nearest Neighbor for each point in the contour array. We use this as a metric of how similair the shape of two edges
 are, and therfore how well they would fit together. A more complex or fine tuned loss function is certainly possible, but this one was
 conceptually simple and worked well. Before actually doing a KNN evaluation, we check a few things to see if the piece combination makes

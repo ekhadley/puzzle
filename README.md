@@ -22,25 +22,24 @@ But getting this involves a few intermediate steps, and some extra information w
 example images from the puzzles I tested on are included in exampleims. This is the basic steps on what we extract
 from our images, and package it all into a pc class member:
   - First we find the contour of the whole piece, after binarizing.
-  - We find the 4 corners of the piece
+  - We find the 4 corners of the piece.
   - Split the full contour at the spots which are closest to each corner.
-  - Identify the type of each side (straight, male, female, other)
-  - Normalize the edges, and generate a comparator class for the loss function
+  - Identify the type of each side (straight, male, female, other).
+  - Normalize the edges, and generate a comparator class for the loss function.
 
   The point of failure for the large, puzzle, and the only step that needed my intervention was the corner detection. The
 algorithm I used to select points is convoluted, and includes many different parameters (magic numbers) whose correct values,
-if they exist, are highly sensitive to the morphology of the pieces you are working with, and how you photograph them. I roughly
-outline the corner selection procedure below:
-  - Get a corner map with cv2's Harris Corner Detection.
-  - Binarize the map with a hand picked threshold.
-  - Find clusters of cornery pixels with K Means Clustering. These are our candidates
-  - Use cornerSubPix on each candidate to find the most cornery part of the feature.
-  - Filter candidates by distance so that we dont get multiple candidates describing the same feature
-  - Take only points on the convex hull of the set of candidates. Corners are unlikely to be interior to any other set of points. (*)
-  - Go through all possible 4 choices of points on the hull, and select the quadrilateral which has the greatest area.
-  
-  
-  
+if they exist, are highly sensitive to the morphology of the pieces you are working with, and how you photograph them. You can
+look through the piece.findCorners() function to see the procedure. Most of the values were hand tuned, and the current values
+are about as good as I could do. Automatic tuning, or several iterative attempts to find corners could be implemented.
+  After finding the corners we identify the side types. This is done becuase while it is obvious (based on shape alone) that two
+male pieces are not going to form a good match, if we identify explicit types on piece initialization, we avoid evaluating the 
+fairly expensive loss function. We use some trigonometry to find, for each point in the side contour, how far it is from the
+straight line from the first point to the end point. Straight sides have basically 0 distance, and a low variance. Male and female
+sides have one strong peak, and therefore a high variance. Depending on if they extend towards or away from the center of the
+puzzle piece, we classify them as male or female. If a side has multiple peaks, one towards and one away from the center, we classify
+it as a weird type. Males only pair with females, but weird types pair with anything, as a catchall. 
+  Once we have all 4 sides and their types, we 
   
 
 

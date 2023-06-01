@@ -21,4 +21,43 @@ search altogether) would yeild correct configurations faster.
 But getting this involves a few intermediate steps, and some extra information we find to make solving easier. A few 
 example images from the puzzles I tested on are included in exampleims. This is the basic steps on what we extract
 from our images, and package it all into a pc class member:
-  - 
+  - First we find the contour of the whole piece, after binarizing.
+  - We find the 4 corners of the piece
+  - Split the full contour at the spots which are closest to each corner.
+  - Identify the type of each side (straight, male, female, other)
+  - Normalize the edges, and generate a comparator class for the loss function
+
+  The point of failure for the large, puzzle, and the only step that needed my intervention was the corner detection. The
+algorithm I used to select points is convoluted, and includes many different parameters (magic numbers) whose correct values,
+if they exist, are highly sensitive to the morphology of the pieces you are working with, and how you photograph them. I roughly
+outline the corner selection procedure below:
+  - Get a corner map with cv2's Harris Corner Detection.
+  - Binarize the map with a hand picked threshold.
+  - Find clusters of cornery pixels with K Means Clustering. These are our candidates
+  - Use cornerSubPix on each candidate to find the most cornery part of the feature.
+  - Filter candidates by distance so that we dont get multiple candidates describing the same feature
+  - Take only points on the convex hull of the set of candidates. Corners are unlikely to be interior to any other set of points. (*)
+  - Go through all possible 4 choices of points on the hull, and select the quadrilateral which has the greatest area.
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

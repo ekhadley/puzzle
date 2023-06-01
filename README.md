@@ -75,7 +75,15 @@ poor. The biggest bottleneck by far, is that you need to take a picture of every
 not the funnest time of my life. The obvious solution would be to capture many pieces in a single image. This could potentially require quite a change
 of the image processing stage. Taking more images at a time means some pieces in the image could be at very different positions relative to the camera,
 adding already to the perspective distortions which I think are present. There is already some code in place for correcting these distortions, but I was
-unable to see much difference in the results. (I think this is becuase the issue I was trying to solve was somewhere else, I later figured out, so maybe I should try again? But it works anyways so its not on the immediate agenda). After loading in all my images, thought, the process was pretty seemless. A familiarized person could put in images and get solving in under an hour, including manual data correction. The main problem with this is that there are just so many hand tuned parameters for a dataset. At least 8 in the corner detection alone, and it's still not enough. 5 or so more in the side type identification, and maybe you couldn't even use this pipeline if you have highly irregular pieces, those without 4 corners, for example. So you can;t just throw anything in here and expect it to work. You could probably get it to that point though if you really wanted to. But computer vision was not the focus of this project, whihc is why mine is mediocre. The solving is what drew me in, and it 
+unable to see much difference in the results. (I think this is becuase the issue I was trying to solve was somewhere else, I later figured out, so maybe I 
+should try again? But it works anyways so its not on the immediate agenda). After loading in all my images, thought, the process was pretty seemless. A
+familiarized person could put in images and get solving in under an hour, including manual data correction. The main problem with this is that there are
+just so many hand tuned parameters for a dataset. At least 8 in the corner detection alone, and it's still not enough. 5 or so more in the side type
+identification, and maybe you couldn't even use this pipeline if you have highly irregular pieces, those without 4 corners, for example. So you can't just
+throw anything in here and expect it to work. You could probably get it to that point though if you really wanted to. But computer vision was not the focus
+of this project, which is why mine is mediocre. The solving is what drew me in, and it is definitely in a place I am happy with. On my unimpressive setup,
+an i7 9700K@4600MHZ and 32gbDDR4, the 10x6 puzzle takes under 7 seconds to solve, and the 18x18 takes around 18 minutes. I imagine this could go down 
+considerably with a more sophisticated search algorithm, or even multithreading.
 
 
 

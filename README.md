@@ -44,16 +44,16 @@ take the normalized edges and make for each a KD Tree class from scikit's K Near
 loss function. Here we also pre calculate the distance from the first point in the edge to the last, as another step to weed out
 incompatible matches instead of doing a KNN calculation.
 ## Loss Function
-  Our loss function is quite simple. It is a simple average of distances from K Nearest Neighbor for each point in the contour array. 
-We use this as a metric of how similair the shape of two edges are, and therfore how well they would fit together. A more complex or
-fine tuned loss function is certainly possible, but this one was conceptually simple and worked well. Before actually doing a KNN
-evaluation, we check a few things to see if the piece combination makes sense. We check that, assuming neither piece is a weird type,
-that we only compare between male-female pairs. There are several considerations with pairs where one or more has a straight side, mostly
-keeping edge continuity. We also check if the end to end distances are similair between the two sides. If all of these checks pass, we go
-on to calculate an average nearest neighbors distance. Any time a score is calculated between two sides, (valid or not) that value is stored
-in an array so that later requests of the loss between that pair is basically free. Invalid pairings get a default score of a million. Typical
-values are between 1-10, where less than 3 is pretty good. The average loss over all pairs in the correct configuration of both tested puzzles
-is about 2.50.
+    Our loss function is quite simple. It takes in two edge shapes, belonging to 2 different pieces, and gives us a simple average of
+distances from K Nearest Neighbor for each point in the contour array. We use this as a metric of how similair the shape of two edges
+are, and therfore how well they would fit together. A more complex or fine tuned loss function is certainly possible, but this one was
+conceptually simple and worked well. Before actually doing a KNN evaluation, we check a few things to see if the piece combination makes
+sense. We check that, assuming neither piece is a weird type, that we only compare between male-female pairs. There are several considerations
+with pairs where one or more has a straight side, mostly keeping edge continuity. We also check if the end to end distances are similair between
+the two sides. If all of these checks pass, we go on to calculate an average nearest neighbors distance. Any time a score is calculated between
+two sides, (valid or not) that value is stored in an array so that later requests of the loss between that pair is basically free. Invalid
+pairings get a default score of a million. Typical values are between 1-10, where less than 3 is pretty good. The average loss over all pairs
+in the correct configuration of both tested puzzles is about 2.50.
 ## Solving
   The solving process for both puzzles consists of an A* search of possible states. At each step, we find the "neighbors" to the current state.
 That is, we select one of the positions on the board which borders some other piece. We prefer to choose those that border more than 1 piece,

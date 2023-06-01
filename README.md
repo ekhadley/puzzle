@@ -39,7 +39,32 @@ straight line from the first point to the end point. Straight sides have basical
 sides have one strong peak, and therefore a high variance. Depending on if they extend towards or away from the center of the
 puzzle piece, we classify them as male or female. If a side has multiple peaks, one towards and one away from the center, we classify
 it as a weird type. Males only pair with females, but weird types pair with anything, as a catchall. 
-  Once we have all 4 sides and their types, we 
+  Once we have all 4 sides and their types, we normalize them, shifting the first point to [0,0] and rotating them to horizontal. We
+take the normalized edges and make for each a KD Tree class from scikit's K Nearest Neighbors algorithm, which is the basis of the
+loss function. Here we also pre calculate the distance from the first point in the edge to the last, as another step to weed out
+incompatible matches instead of doing a KNN calculation.
+## Loss Function
+  Our loss function is quite simple. It is a simple average of distances from K Nearest Neighbor for each point in the contour array. 
+We use this as a metric of how similair the shape of two edges are, and therfore how well they would fit together. A more complex or
+fine tuned loss function is certainly possible, but this one was conceptually simple and worked well. Before actually doing a KNN
+evaluation, we check a few things to see if the piece combination makes sense. We check that, assuming neither piece is a weird type,
+that we only compare between male-female pairs. There are several considerations with pairs where one or more has a straight side, mostly
+keeping edge continuity. We also check if the end to end distances are similair between the two sides. If all of these checks pass, we go
+on to calculate an average nearest neighbors distance. Any time a score is calculated between two sides, (valid or not) that value is stored
+in an array so that later requests of the loss between that pair is basically free. Invalid pairings get a default score of a million. Typical
+values are between 1-10, where less than 3 is pretty good. The average loss over all pairs in the correct configuration of both tested puzzles
+is about 2.50.
+## Solving
+  The solving process for both puzzles consists of an A* search of possible states. At each step, we find the "neighbors" to the current state.
+That is, we select one of the positions on the board which borders some other piece. We prefer to choose those that border more than 1 piece,
+becuase if a piece has good loss for two adjacent pieces, we can be more confident that it is a correct placement than when comparing to just one.
+We look through all possible pieces (those that have not already been placed), placed in that spot with any rotation (4 possible rotations), and rank the piece/rotation combinations by lowest loss. We keep all of the placements which lie above some rank and loss value, these thresholds being
+set by the user. Those that we choose to keep become the neighbors of the current state. A* needs two values to choose which state to explore further: a cost for the state, and the estimated cost from that state to the finish. The cost of a puzzle state is the sum of the losses for each
+placement made. Essentially, the cost is the average loss per piece * the number of placed pieces. It's easy to guess the heuristic then: estimated cost for the rest of the puzzle = average loss per piece * number of UNplaced pieces. We assume the average losses in the future will be the same
+as they have been in the past. In my testing, I have observed that this is usually not the case with states that have made a misstep at some point
+in the past: once you make one incorrect placement, you are forced to make worse and worse ones over time. Using this, one could imagine a cost
+function that evaluates how the average loss has been changing over time, and formulate a line of best fit or some other function to factor in if
+the state has been steadily declining in quality. But the assumption of linearity works just fine.
   
 
 

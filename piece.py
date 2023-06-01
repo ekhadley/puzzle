@@ -331,10 +331,10 @@ def makePcs(imgdir, num, load="", save=""):
         loadpath = f"{load}\\{i}" if load != "" else ""
         savepath = f"{save}\\{i}" if save != "" else ""
         newp = pc(im, loadPath=loadpath, savePath=savepath)
-        #cv2.imshow(f'pc', newp.show(scale=.5))
+        cv2.imshow(f'pc', newp.show(scale=.6))
         #print(f"\n{green}{i}")
         #cv2.imshow(f'crnrs', imscale(newp.cm, .5))
-        #cv2.waitKey(1)
+        cv2.waitKey(0)
         pcs.append(newp)
     return pcs
 

@@ -118,7 +118,7 @@ class aStarSolver():
     def chooseInitialPlacement(self, state):
         pass
 
-    def solve(self, printEvery=500, maxScore=100, maxRank=3, costScale=1, heuristicScale=1, horizontal=True):
+    def solve(self, printEvery=500, maxScore=100, maxRank=10, costScale=1, heuristicScale=1, horizontal=True):
         t = time.time()
         pcs = self.pcs
         matchStore = newStore(len(pcs))
@@ -129,8 +129,8 @@ class aStarSolver():
         else: spots = [(i//stateShape[1], i%stateShape[0]) for i in range(324)]
 
         while len(best.unplaced) != 0:
-            nbrs = Neighbors(pcs, best, stateShape, spots[len(best.placed)], cutoffRank=maxRank, cutoffScore=maxScore, store=matchStore)
-            #nbrs = neighbors(pcs, best, maxScore, maxRank, store=matchStore)
+            #nbrs = Neighbors(pcs, best, stateShape, spots[len(best.placed)], cutoffRank=maxRank, cutoffScore=maxScore, store=matchStore)
+            nbrs = neighbors(pcs, best, cutoffScore=maxScore, cutoffRank=maxRank, store=matchStore)
             
             for nbr in nbrs:
                 hScore = costToComplete(nbr)

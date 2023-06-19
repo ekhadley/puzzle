@@ -7,7 +7,7 @@ straightSideTypes = {1:0 ,2:1, 3:2, 4:3, 5:4, 6:5, 12:6, 20:7, 10:8}
 # 0 is an interior piece, 1-4 are edge pieces, 5-8 are corner pieces. The key values are hashes. see identifyTypes()
 
 class pc:
-    def __init__(self, im, loadPath="", savePath="", loadMinimal=False):
+    def __init__(self, im, loadPath="", savePath="", loadMinimal=True):
         self.base = im
         self.minimal = loadMinimal
         assert loadPath!="" or np.shape(self.base) != (), "no source image or extracted information provided. need one or both"
@@ -331,10 +331,10 @@ def makePcs(imgdir, num, load="", save=""):
         loadpath = f"{load}\\{i}" if load != "" else ""
         savepath = f"{save}\\{i}" if save != "" else ""
         newp = pc(im, loadPath=loadpath, savePath=savepath)
-        cv2.imshow(f'pc', newp.show(scale=.6))
+        #cv2.imshow(f'pc', newp.show(scale=.6))
         #print(f"\n{green}{i}")
         #cv2.imshow(f'crnrs', imscale(newp.cm, .5))
-        cv2.waitKey(0)
+        #cv2.waitKey(0)
         pcs.append(newp)
     return pcs
 

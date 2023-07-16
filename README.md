@@ -83,7 +83,7 @@ identification, and maybe you couldn't even use this pipeline if you have highly
 throw anything in here and expect it to work. You could probably get it to that point though if you really wanted to. But computer vision was not the focus
 of this project, which is why mine is mediocre. The solving is what drew me in, and it is definitely in a place I am happy with. On my unimpressive setup,
 an i7 9700K@4600MHZ and 32gbDDR4, the 10x6 puzzle takes under 7 seconds to solve, and the 18x18 takes around 18 minutes. I imagine this could go down 
-considerably with a more sophisticated search algorithm, or even multithreading.
+considerably with a more sophisticated search algorithm, or even multithreading (precalculate all match scores with multithreading?).
 
 
 

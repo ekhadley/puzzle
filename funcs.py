@@ -2,18 +2,20 @@ import math, time, random, cv2, numpy as np
 from tqdm import tqdm
 import pynput
 
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+purple = '\033[95m'
+blue = '\033[94m'
+cyan = '\033[96m'
+lime = '\033[92m'
+yellow = '\033[93m'
+red = "\033[38;5;196m"
+pink = "\033[38;5;206m"
+orange = "\033[38;5;202m"
+green = "\033[38;5;34m"
+gray = "\033[38;5;8m"
 
-blue, green, cyan, yellow, red, purple, endc = bcolors.OKBLUE, bcolors.OKGREEN, bcolors.OKCYAN, bcolors.WARNING, bcolors.FAIL, bcolors.HEADER, bcolors.ENDC
+bold = '\033[1m'
+underline = '\033[4m'
+endc = '\033[0m'
 
 def imscale(img, s):
     try:

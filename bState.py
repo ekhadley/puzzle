@@ -103,9 +103,9 @@ class boardState:
         return per
         
     def showState(self):
-        c = [purple, red, blue, green, cyan, yellow]
+        c = [purple, red, blue, green, cyan, yellow, lime, orange, pink]
+        r = ""
         for row in self.pcState:
-            r = ""
             for e in row:
                 if e != -1:
                     if e < 100:
@@ -113,10 +113,10 @@ class boardState:
                         r += (f" {e}  " if e < 10 else f" {e} ")
                     else:
                         r += f"{random.choice(c)} {e}"
-                    r += endc
                 else:
-                    r += " x  "
-            print(r + bcolors.ENDC)
+                    r += gray + " x  "
+            r += "\n"
+        print(r + endc)
     
     def copy(self):
         return boardState(self.shape, self.numPcs, [np.array(self.pcState, copy=True), np.array(self.rotState, copy=True), np.array(self.borders, copy=True)])

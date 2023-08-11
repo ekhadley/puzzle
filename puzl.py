@@ -19,7 +19,7 @@ def evalMatch(pcList, pcIdxs, sideIdxs, store=None, lengthThresh=50):
     first, second = sideIdxs
     pcid1, pcid2 = pcIdxs
     storedScore = store[pcid1][pcid2][first][second]
-    if isinstance(store, list) and storedScore != -1 : return storedScore
+    if store is not None and storedScore != -1 : return storedScore
     sides1, types1, dists1, Knbrs1 = pcList[pcid1].pairingInfo
     sides2, types2, dists2, Knbrs2 = pcList[pcid2].pairingInfo
     s1, s2 = sides1[first], sides2[second]

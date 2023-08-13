@@ -126,11 +126,11 @@ class aStarSolver():
         stateShape, best = self.initialState.shape, self.initialState
         heapq.heappush(states, (0, self.initialState))
         if horizontal: spots = [(i%stateShape[0], i//stateShape[1]) for i in range(324)]
-        else: spots = [(i//stateShape[1], i%stateShape[0]) for i in range(324)]
+        else: spots = [(i//stateShape[0], i%stateShape[1]) for i in range(324)]
 
         while len(best.unplaced) != 0:
             #nbrs = Neighbors(pcs, best, stateShape, spots[len(best.placed)], cutoffRank=maxRank, cutoffScore=maxScore, store=matchStore)
-            nbrs = neighbors(pcs, best, cutoffScore=maxScore, cutoffRank=maxRank, store=matchStore)
+            nbrs = neighbors(pcs, best, cutoffScore=maxScore, cutoffRank=maxRank, store=matchStore, horizontal=horizontal)
             
             for nbr in nbrs:
                 hScore = costToComplete(nbr)
@@ -179,14 +179,14 @@ def Neighbors(pcList, state, stateShape, spot, cutoffRank=5, cutoffScore=100, st
         else: break
     return nbrs
 
-def neighbors(pcList, state, cutoffScore, cutoffRank, store=None): # looks for possible placements at only one perimeter vacancy
+def neighbors(pcList, state, cutoffScore, cutoffRank, store=None, horizontal=False): # looks for possible placements at only one perimeter vacancy
     placeableSpots = state.perimeterPositions(prio=True)
     if len(placeableSpots[3]) != 0: spots=placeableSpots[3]
     elif len(placeableSpots[2]) != 0: spots=placeableSpots[2]
     elif len(placeableSpots[1]) != 0: spots=placeableSpots[1]
     elif len(placeableSpots[0]) != 0: spots=placeableSpots[0]
     else: assert 0, f"no valid perimeter positions found. state: {state.showState()}"
-    placements = bestFit(pcList, state, spots[0], store=store, returnAll=True)
+    placements = bestFit(pcList, state, spots[0 if horizontal else -1], store=store, returnAll=True)
     placements.sort(key=lambda x: x[3])
     nbrs = []
     for placement in placements[:cutoffRank]:

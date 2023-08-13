@@ -14,7 +14,7 @@ piece.checkPcs(pcs, (pw, ph))
 
 inps = [(0,(0,0),0), (17,(17,0),1), (306,(0,17),0), (323,(17,17),0), (12, (12,0), 0)]
 initial = bState.boardState((pw, ph), len(pcs))
-solver = puzl.aStarSolver(initial, pcs, initialPlacement=inps[4])
-best = solver.solve(printEvery=3, heuristicScale=1, maxRank=10, maxScore=30)
+solver = puzl.aStarSolver(initial, pcs, initialPlacement=inps[2])
+best = solver.solve(printEvery=3, heuristicScale=1, maxRank=10, maxScore=30, horizontal=True)
 
 

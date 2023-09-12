@@ -17,6 +17,7 @@ uses normal or simple weighted A*. I am quite confident that using some more adv
 search altogether) would yeild correct configurations faster.
 
 ## Image Processing
+![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
   There is only really one thing we need to begin evaluting how well two pieces fit together: the shape of the sides.
 But getting this involves a few intermediate steps, and some extra information we find to make solving easier. A few 
 example images from the puzzles I tested on are included in exampleims. This is the basic steps on what we extract

@@ -16,7 +16,7 @@ piece.checkPcs(pcs, (pw, ph))
 inps = [(0,(0,0),0), (17,(17,0),1), (306,(0,17),0), (323,(17,17),0), (12, (12,0), 0)]
 initial = bState.boardState((pw, ph), len(pcs))
 solver = puzl.aStarSolver(initial, pcs, initialPlacement=inps[0])
-best = solver.solve(printEvery=500, heuristicScale=1, maxRank=5, maxScore=15, horizontal=True)
+best = solver.solve(printEvery=10, heuristicScale=1, maxRank=5, maxScore=15, horizontal=True)
 
 # random idea: look at partial solves, correct and incorrect, and look for identifiable
 # differences in distribution (of scores, rotations, idk) between true configs and false

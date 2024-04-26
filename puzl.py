@@ -124,9 +124,9 @@ class aStarSolver():
         matchStore = newStore(len(pcs))
         i, states = 0, []
         stateShape, best = self.initialState.shape, self.initialState
-        heapq.heappush(states, (0, self.initialState))
-        if horizontal: spots = [(i%stateShape[0], i//stateShape[1]) for i in range(324)]
-        else: spots = [(i//stateShape[0], i%stateShape[1]) for i in range(324)]
+        heapq.heappush(states, (0.01, self.initialState))
+        if horizontal: spots = [(i%stateShape[0], i//stateShape[1]) for i in range(len(pcs))]
+        else: spots = [(i//stateShape[0], i%stateShape[1]) for i in range(len(pcs))]
 
         while len(best.unplaced) != 0:
             #nbrs = Neighbors(pcs, best, stateShape, spots[len(best.placed)], cutoffRank=maxRank, cutoffScore=maxScore, store=matchStore)
@@ -139,7 +139,7 @@ class aStarSolver():
             
             if i%printEvery == 0:
                 best.showState()
-                print(f"expanded state with cost {red}{best.cost:.5f}{endc} (average cost/placement={red}{best.cost/len(best.placed):.10f}{endc}) [working on {purple}{len(states):,}{endc} states]\n")
+                print(f"expanded state with cost {red}{best.cost:.5f}{endc} (average cost/placement={red}{best.cost/len(best.placed):.10f}{endc}) [working on {purple}{len(states):,}{endc} states]({purple}{time.time()-t:.4f}s{endc})\n")
             i += 1
         print(f"solution found! total cost of the solution is {red}{best.cost:.4f}{endc}, ")
         print(f"with an average cost/placement of {red}{best.cost/len(best.placed):.4f}{endc}({purple}{time.time()-t:.4f}s{endc})")
@@ -158,6 +158,7 @@ def Neighbors(pcList, state, stateShape, spot, cutoffRank=5, cutoffScore=100, st
                 if otherPc != -1:
                     querySide = (rot+borderSide)%4
                     if validEdgePlacement(pcList, stateShape, pcIdx, spot, rot):
+                        print(2319408912348704123)
                         fit = evalMatch(pcList, (pcIdx, otherPc), (querySide, otherSide), store=store)
                         cumscore, scorenum = cumscore+fit, scorenum+1
                     else:
@@ -238,7 +239,7 @@ def astar(initialState, pcs, cutoffRank=10, cutoffScore=100, printEvery=100):
         
         if i%printEvery == 0:
             best.showState()
-            print(f"expanded state with cost {red}{best.cost:.5f}{endc} (average cost/placement={red}{best.cost/len(best.placed):.10f}{endc}) [working on {purple}{len(states):,}{endc} states]\n")
+            print(f"expanded state with cost {red}{best.cost:.5f}{endc} (average cost/placement={red}{best.cost/len(best.placed):.10f}{endc}) [working on {purple}{len(states):,}{endc} states]({purple}{time.time()-t:.4f}s{endc})\n")
         i += 1
     print(f"solution found! total cost of the solution is {red}{best.cost:.4f}{endc}, ")
     print(f"with an average cost/placement of {red}{best.cost/len(best.placed):.4f}{endc}({purple}{time.time()-t:.4f}s{endc})")

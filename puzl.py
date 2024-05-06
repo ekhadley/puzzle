@@ -110,7 +110,7 @@ def validStraightSides(types1, types2, first, second):
 class aStarSolver():
     def __init__(self, initialState, pcs,  initialPlacement=None):
         self.pcs = pcs
-        if type(initialPlacement) == type(None): self.initialState = self.makeInitialPlacement(initialState)
+        if initialPlacement is None: self.initialState = self.makeInitialPlacement(initialState)
         else:
             ipz, ipos, irot = initialPlacement
             self.initialState = initialState.place(ipz, ipos, irot, keep=False)

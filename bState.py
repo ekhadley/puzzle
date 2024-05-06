@@ -42,7 +42,7 @@ class boardState:
             if keep:
                 self.unplaced = np.delete(self.unplaced, np.where(self.unplaced==pz[i]))
             else:
-                if type(unplaced)==type(None): unplaced = np.array(self.unplaced, copy=True)
+                if unplaced is None: unplaced = np.array(self.unplaced, copy=True)
                 #unplaced = np.delete(unplaced, np.where(unplaced==pz[i]))
                 unplaced = np.int32([e for e in unplaced if e != pz[i]])
         if keep:

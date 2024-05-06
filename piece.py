@@ -263,7 +263,7 @@ class pc:
         return shifted
 
     def rectify(self, checker, mtx, dst, new, size=7):
-        assert type(checker) != type(None), 'empty checkerboard image'
+        assert checker is not None, 'empty checkerboard image'
         checker = cv2.undistort(checker, mtx, dst, None, new)
         self.undist = cv2.undistort(self.base, mtx, dst, None, new)
         obj = np.zeros((size*size,3), np.float32)
@@ -296,7 +296,7 @@ class pc:
 
     def show(self, base=True, scale=1, edges=True, corners=True, center=True, radius=19, thickness=3):
         assert not self.minimal, f"minimal information was loaded from file, cannot display image overlay"
-        if type(self.base) == type(None):
+        if self.base is None:
             self.im = self.preprocess(self.base)
         if base:
             mod = np.copy(self.base)

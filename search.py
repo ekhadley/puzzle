@@ -1,24 +1,29 @@
-from funcs import *
+from utils import *
 import piece, bState, puzl
 
-imgdir = "C:\\Users\\ek\\Desktop\\testimgs\\dinopi\\imgs"
-infodir = "C:\\Users\\ek\\Desktop\\testimgs\\dinopi\\extracted"
-#pw, ph = 18, 18
-pw, ph = 10, 6
+puzzle_name = 'yeet'
+imgdir = f"C:\\Users\\ekhad\\Desktop\\puzzle_imgs\\{puzzle_name}\\imgs"
+infodir = f"C:\\Users\\ekhad\\Desktop\\puzzle_imgs\\{puzzle_name}\\extracted"
+if puzzle_name == 'dinopi':
+    pw, ph = 10, 6
+    initial_placement = (0,(0,0),1)
+elif puzzle_name == 'yeet':
+    pw, ph = 18, 18
+    initial_placement = (0,(0,0),0)
+    #initial_placement = (17,(17,0),1)
+    #initial_placement = (306,(0,17),0)
+    #initial_placement = (323,(17,17),0)
 
-pcs = piece.makePcs("", pw*ph, load=infodir)
-#pcs = piece.makePcs(imgdir, pw*ph, load=infodir)
-#pcs = piece.makePcs(imgdir, pw*ph, save=infodir)
-#pcs = piece.makePcs(imgdir, pw*ph)
 
+pcs = piece.makePcs(imgdir, pw*ph, load=infodir) # this loads in the stored piece info
+#pcs = piece.makePcs(imgdir, pw*ph, save=infodir) # this will rewrite the saves with autoextracted piece info
+#pcs = piece.makePcs(imgdir, pw*ph) # this will load the images and autoextract piece info
 piece.checkPcs(pcs, (pw, ph))
 
-#inps = [(0,(0,0),0), (17,(17,0),1), (306,(0,17),0), (323,(17,17),0), (12, (12,0), 0)]
-inps = [(0,(0,0),1)]
-initial = bState.boardState((pw, ph), len(pcs))
-solver = puzl.aStarSolver(initial, pcs, initialPlacement=inps[0])
-best = solver.solve(printEvery=300, heuristicScale=1, maxRank=10, maxScore=100, horizontal=True)
 
+initial = bState.boardState((pw, ph), len(pcs))
+solver = puzl.aStarSolver(initial, pcs, initialPlacement=initial_placement)
+best = solver.solve(printEvery=50, heuristicScale=1, maxRank=10, maxScore=100, horizontal=True)
 
 # random idea: look at partial solves, correct and incorrect, and look for identifiable
 # differences in distribution (of scores, rotations, idk) between true configs and false

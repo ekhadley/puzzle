@@ -1,7 +1,4 @@
-from funcs import *
-from sklearn.neighbors import NearestNeighbors
-import os
-import matplotlib.pyplot as plt
+from utils import *
 
 straightSideTypes = {1:0 ,2:1, 3:2, 4:3, 5:4, 6:5, 12:6, 20:7, 10:8}
 # 0 is an interior piece, 1-4 are edge pieces, 5-8 are corner pieces. The key values are hashes. see identifyTypes()
@@ -124,15 +121,15 @@ class pc:
         return np.flip(cv2.convexHull(corners)[:,0], axis=0), centroid
         
     def findCorners(self, rect, numClusters=25, threshold=.35, blurKernel=(13,13), blockSize=65, ksize=7, k=.070, criteriaIter=50, subPixKernel=(80,80)):
-        rx, ry, w, h = rect
+        #rx, ry, w, h = rect
         #croppedComponent = cv2.GaussianBlur(gray, (11, 11), 0)[ry-10:ry+h+10,rx-10:rx+w+10]
         croppedComponent = cv2.GaussianBlur(self.im, blurKernel, 0)
         #cornerMap = cv2.cornerHarris(croppedComponent, 40, 7, .001) #dinopi
         cornerMap = cv2.cornerHarris(croppedComponent, blockSize=blockSize, ksize=ksize, k=k) #yeet
         ret, cm = cv2.threshold(cornerMap, threshold, 255, cv2.THRESH_BINARY)
-        for i in range(10):
-            bin = cv2.erode(cm, np.ones((1, 1), np.uint8))
-            bin = cv2.dilate(cm, np.ones((1, 1), np.uint8))
+        #for i in range(10):
+        #    bin = cv2.erode(cm, np.ones((1, 1), np.uint8))
+        #    bin = cv2.dilate(cm, np.ones((1, 1), np.uint8))
         y, x = np.where(cm==255)
         candidates = np.float32([[x[i], y[i]] for i in range(len(x))])
         criteria = (cv2.TERM_CRITERIA_MAX_ITER + cv2.TERM_CRITERIA_EPS, 50, 0.001)
@@ -159,9 +156,7 @@ class pc:
                 if len(set(j)) == 4:
                     quads.append([hull[e] for e in j])
 
-        self.cm = circles(cm, hull, width=2, radius=30)
-        #cv2.imshow("cm", imscale(cm, .5))
-        #cv2.waitKey(0)
+        #self.cm = circles(cm, hull, width=2, radius=30)
 
         quads = np.array(quads)
         best = (quads[0], cv2.contourArea(quads[0]))
@@ -171,6 +166,11 @@ class pc:
                 best = (e, area)
         #corners = cv2.cornerSubPix(croppedComponent, best[0], (50, 50), (-1,-1), criteria)
         corners = best[0]
+        
+        cv2.imshow("im", imscale(circles(self.base, corners, width=10, radius=30, color=(0, 255, 150)), 0.7))
+        # show the autolocated corners, if user presses spacebar, continue with the function, otherwise call manualCornerSelect and return that
+        if cv2.waitKey(0) != 32:
+            return self.manualCornerSelect(rect)
 
         centroid = (0,0)
         for c in corners: centroid += c
@@ -322,10 +322,8 @@ class pc:
 
 def makePcs(imgdir, num, load="", save=""):
     pcs = []
-    if load != "":
-        print(f"{yellow}loading extracted piece information from {load}{endc}")
-    if save != "":
-        print(f"{yellow}saving extracted piece information to {save}{endc}")
+    if load != "": print(f"{yellow}loading extracted piece information from {load}{endc}")
+    if save != "": print(f"{yellow}saving extracted piece information to {save}{endc}")
     for i in tqdm(range(num), desc=f"{green}collecting piece information{endc}", ncols=100, unit="pcs"):
         im = cv2.imread(f"{imgdir}\\{i}.png") if imgdir != "" else None
         loadpath = f"{load}\\{i}" if load != "" else ""

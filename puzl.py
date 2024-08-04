@@ -1,12 +1,11 @@
 from piece import *
-import heapq
 
 def validPairing(types1, dists1, types2, dists2, first, second, lengthThresh):
     if types1[first] != 9 and types2[second] != 9:
         if types1[first] == types2[second]:
             #print(f"matching side types:{types1[first]=}, {types2[second]=}")
             return False
-    gap =abs(dists1[first] - dists2[second]) 
+    gap = abs(dists1[first] - dists2[second]) 
     if gap > lengthThresh:
         #print(f"distance gap too large:{dists1[first]=}, {dists2[second]=}, {gap=}, {lengthThresh=}")
         return False
@@ -18,19 +17,20 @@ def validPairing(types1, dists1, types2, dists2, first, second, lengthThresh):
 def evalMatch(pcList, pcIdxs, sideIdxs, store=None, lengthThresh=50):
     first, second = sideIdxs
     pcid1, pcid2 = pcIdxs
-    storedScore = store[pcid1][pcid2][first][second]
-    if store is not None and storedScore != -1 : return storedScore
+    if store is not None and (storedScore := store[pcid1][pcid2][first][second]) != -1: return storedScore # walrus!!!!!!!
     sides1, types1, dists1, Knbrs1 = pcList[pcid1].pairingInfo
     sides2, types2, dists2, Knbrs2 = pcList[pcid2].pairingInfo
-    s1, s2 = sides1[first], sides2[second]
+    s2 = sides2[second]
     
     if validPairing(types1, dists1, types2, dists2, first, second, lengthThresh):
-        distances, indexes = Knbrs1[first].kneighbors(s2)
+        distances, indices = Knbrs1[first].kneighbors(s2)
         fit = np.mean(distances)
     else:
+        #print(bold, red, f"invalid pairing: {pcid1, pcid2, first, second}", endc)
         fit = 1e6
-    store[pcid1][pcid2][first][second] = fit
-    store[pcid2][pcid1][second][first] = fit
+    if store is not None:
+        store[pcid1][pcid2][first][second] = fit
+        store[pcid2][pcid1][second][first] = fit
     return fit
 
 def newStore(numPcs):

@@ -1,4 +1,5 @@
-from funcs import *
+from utils import *
+
 class boardState:
     def __init__(self, shape, numPcs, state=None):
         self.numPcs = numPcs

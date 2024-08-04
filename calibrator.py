@@ -1,5 +1,4 @@
-import cv2, time, numpy as np
-from funcs import *
+from utils import *
 
 def calibrate(n, size, filepath=""):
     vid = cv2.VideoCapture(0)

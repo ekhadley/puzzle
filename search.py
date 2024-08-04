@@ -1,7 +1,7 @@
 from utils import *
 import piece, bState, puzl
 
-puzzle_name = 'yeet'
+puzzle_name = 'dinopi'
 imgdir = f"C:\\Users\\ekhad\\Desktop\\puzzle_imgs\\{puzzle_name}\\imgs"
 infodir = f"C:\\Users\\ekhad\\Desktop\\puzzle_imgs\\{puzzle_name}\\extracted"
 if puzzle_name == 'dinopi':

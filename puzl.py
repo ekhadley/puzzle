@@ -141,9 +141,8 @@ class aStarSolver():
                 best.showState()
                 print(f"expanded state with cost {red}{best.cost:.5f}{endc} (average cost/placement={red}{best.cost/len(best.placed):.10f}{endc}) [working on {purple}{len(states):,}{endc} states]({purple}{time.time()-t:.4f}s{endc})\n")
             i += 1
-        print(f"solution found! total cost of the solution is {red}{best.cost:.4f}{endc}, ")
-        print(f"with an average cost/placement of {red}{best.cost/len(best.placed):.4f}{endc}({purple}{time.time()-t:.4f}s{endc})")
         best.showState()
+        print(f"solution found! total cost of the solution is {red}{best.cost:.4f}{endc} with an average cost/placement of {red}{best.cost/len(best.placed):.4f}{endc}({purple}{time.time()-t:.4f}s{endc})")
         return best
 
 def Neighbors(pcList, state, stateShape, spot, cutoffRank=5, cutoffScore=100, store=None):
@@ -158,7 +157,6 @@ def Neighbors(pcList, state, stateShape, spot, cutoffRank=5, cutoffScore=100, st
                 if otherPc != -1:
                     querySide = (rot+borderSide)%4
                     if validEdgePlacement(pcList, stateShape, pcIdx, spot, rot):
-                        print(2319408912348704123)
                         fit = evalMatch(pcList, (pcIdx, otherPc), (querySide, otherSide), store=store)
                         cumscore, scorenum = cumscore+fit, scorenum+1
                     else:

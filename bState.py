@@ -117,7 +117,9 @@ class boardState:
                 else:
                     r += gray + " x  "
             r += "\n"
-        print(r + endc)
+        r += endc
+        #print(r)
+        print(repr(r))
     
     def copy(self):
         return boardState(self.shape, self.numPcs, [np.array(self.pcState, copy=True), np.array(self.rotState, copy=True), np.array(self.borders, copy=True)])

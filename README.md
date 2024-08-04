@@ -88,6 +88,9 @@ down considerably with a more sophisticated search algorithm, or even multithrea
 
 
 
+'\x1b[96m 0  \x1b[96m 1  \x1b[95m 2  \x1b[95m 3  \x1b[38;5;202m 4  \x1b[96m 5  \x1b[38;5;202m 6  \x1b[94m 7  \x1b[96m 8  \x1b[94m 9  \n\x1b[96m 10 \x1b[38;5;202m 11 \x1b[93m 12 \x1b[38;5;202m 13 \x1b[93m 14 \x1b[93m 15 \x1b[94m 16 \x1b[94m 17 \x1b[92m 18 \x1b[96m 19 \n\x1b[94m 20 \x1b[95m 21 \x1b[38;5;196m 22 \x1b[94m 23 \x1b[95m 24 \x1b[96m 25 
+\x1b[38;5;206m 26 \x1b[38;5;196m 27 \x1b[96m 28 \x1b[38;5;196m 29 \n\x1b[94m 30 \x1b[38;5;34m 31 \x1b[94m 32 \x1b[93m 33 \x1b[94m 34 \x1b[92m 35 \x1b[94m 36 \x1b[92m 37 \x1b[38;5;34m 38 \x1b[93m 39 \n\x1b[95m 40 \x1b[92m 41 \x1b[38;5;202m 42 \x1b[38;5;206m 43 \x1b[38;5;202m 44 \x1b[96m 45 \x1b[92m 46 \x1b[38;5;34m 47 \x1b[38;5;34m 48 \x1b[38;5;202m 49 \n\x1b[38;5;202m 50 \x1b[38;5;202m 51 \x1b[93m 52 \x1b[38;5;34m 53 \x1b[95m 54 \x1b[95m 55 \x1b[38;5;196m 56 \x1b[38;5;34m 57 \x1b[38;5;206m 58 \x1b[93m 59 \n\x1b[0m'
+
 
 
 

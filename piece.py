@@ -324,6 +324,11 @@ def makePcs(imgdir, num, load="", save=""):
     pcs = []
     if load != "": print(f"{yellow}loading extracted piece information from {load}{endc}")
     if save != "": print(f"{yellow}saving extracted piece information to {save}{endc}")
+    if load == "" and save != "":
+        confirm = input(bold, red, "you are about to save the autoextracted piece info, potentially overwriting existing data. type 'yes' to confirm, or anything else to cancel: ", endc)
+        if confirm != "yes":
+            print(f"{red}extraction cancelled{endc}")
+            exit()
     for i in tqdm(range(num), desc=f"{green}collecting piece information{endc}", ncols=100, unit="pcs"):
         im = cv2.imread(f"{imgdir}\\{i}.png") if imgdir != "" else None
         loadpath = f"{load}\\{i}" if load != "" else ""

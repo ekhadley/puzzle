@@ -1,4 +1,5 @@
 # Puzzle Solver
+![alt text](https://github.com/ekhadley/puzzle/blob/master/exampleims/solved.png)
   This code is a project whose aim is to automatically extract features from pictures of puzzle pieces, and then
 use that information to solve the puzzle. Calibrator and cameraparam is code for getting information about the camera 
 matrix and distortion, which is not currently corrected for as of the most recent version, but the code is there. You will

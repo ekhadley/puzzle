@@ -1,10 +1,10 @@
 # Puzzle Solver
 ![alt text](https://github.com/ekhadley/puzzle/blob/master/exampleims/solved.png)
-  This code is a project whose aim is to automatically extract features from pictures of puzzle pieces, and then
-use that information to solve the puzzle. Calibrator and cameraparam is code for getting information about the camera 
-matrix and distortion, which is not currently corrected for as of the most recent version, but the code is there. You will
-find the image processing/info extraction code in piece.py. Most of the solving code is in puzl.py. bState is a class 
-which describes a particular board state, which are created and evaluated as part of the search algorithm. This code was 
+  This is an algorithm that automatically extracts features from pictures of puzzle pieces, and then use that information
+to automatically where each piece goes. Calibrator and cameraparam is code for getting information about the camera matrix
+and distortion, which is not currently corrected for as of the most recent version, but the code is there. You will find
+the image processing/info extraction code in piece.py. Most of the solving code is in puzl.py. bState is a class  which
+describes a particular board state, which are created and evaluated as part of the search algorithm. This code was 
 sucessfully tested on two puzzles, a 10x6 and an 18x18. The automatic feature detection worked for the 60 piece puzzle,
 but even after a good amount of tuning and tweaking, I could not successfully detect features for all 324 pieces in 
 the 18x18. In the end, there was about 10 pieces which I had to go in and manually correct. Once all data has been

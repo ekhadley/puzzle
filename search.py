@@ -1,8 +1,9 @@
-from utils import *
-import piece, bState, puzl
+import piece
+import bState
+import puzl
 
 
-puzzle_name = 'dinopi'
+puzzle_name = 'yeet'
 imgdir = f"C:\\Users\\ekhad\\Desktop\\puzzle_imgs\\{puzzle_name}\\imgs"
 infodir = f"C:\\Users\\ekhad\\Desktop\\puzzle_imgs\\{puzzle_name}\\extracted"
 if puzzle_name == 'dinopi':

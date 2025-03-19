@@ -3,9 +3,9 @@ import bState
 import puzl
 
 
-puzzle_name = 'yeet'
-imgdir = f"C:\\Users\\ekhad\\Desktop\\puzzle_imgs\\{puzzle_name}\\imgs"
-infodir = f"C:\\Users\\ekhad\\Desktop\\puzzle_imgs\\{puzzle_name}\\extracted"
+puzzle_name = ['dinopi', 'yeet'][1]
+imgdir = f"puzzle_imgs\\{puzzle_name}\\imgs"
+infodir = f"puzzle_imgs\\{puzzle_name}\\extracted"
 if puzzle_name == 'dinopi':
     pw, ph = 10, 6
     initial_placement = (0,(0,0),1)

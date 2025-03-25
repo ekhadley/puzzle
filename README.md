@@ -84,5 +84,5 @@ just so many hand tuned parameters for a dataset. At least 8 in the corner detec
 identification, and maybe you couldn't even use this pipeline if you have highly irregular pieces, those without 4 corners, for example. So you can't just
 throw anything in here and expect it to work. You could probably get it to that point though if you really wanted to. But computer vision was not the focus
 of this project, which is why mine is mediocre. The solving is what drew me in, and it is definitely in a place I am happy with. On my decent setup, the 10x6
-puzzle takes about 16 seconds to solve (with non-aggressive solver parameters), and the 18x18 takes around 150 seconds (with same). I imagine this could go
+puzzle takes about 9 seconds to solve (with non-aggressive solver parameters), and the 18x18 takes around 90 seconds (with same). I imagine this could go
 down considerably with a more sophisticated search algorithm, or even multithreading (precalculate all match scores with multithreading?).
